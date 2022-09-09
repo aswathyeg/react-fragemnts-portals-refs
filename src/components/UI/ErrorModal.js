@@ -1,5 +1,5 @@
 import React from "react";
-
+import ReactDOM from "react";
 import Card from "./Card";
 import Button from "./Button";
 import classes from "./ErrorModal.module.css";
@@ -22,7 +22,22 @@ const Modaloverlay = (props) => {
   );
 };
 const ErrorModal = (props) => {
-  return <React.Fragment></React.Fragment>;
+  return (
+    <React.Fragment>
+      {ReactDOM.createPortal(
+        <Backdrop onConfirm={props.onConfirm} />,
+        document.getElementById("backdrop-root")
+      )}
+      {ReactDOM.createPortal(
+        <Modaloverlay
+          title={props.title}
+          message={props.message}
+          onConfirm={props.onConfirm}
+        />,
+        document.getElementById("overlay-root")
+      )}
+    </React.Fragment>
+  );
 };
 
 export default ErrorModal;
